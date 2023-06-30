@@ -1,8 +1,8 @@
 import streamlit as st
 
-def calculate_monthly_payment(cost, years, interest_rate, maintenance_price, parking_cost, other_expenses):
-    # Calculate the total loan amount
-    loan_amount = cost + maintenance_price + parking_cost + other_expenses
+def calculate_monthly_payment(cost, down_payment, years, interest_rate, maintenance_price, parking_cost, other_expenses):
+    # Calculate the loan amount
+    loan_amount = cost - down_payment + maintenance_price + parking_cost + other_expenses
 
     # Convert the interest rate from percentage to decimal
     monthly_interest_rate = (interest_rate / 100) / 12
@@ -19,6 +19,7 @@ def main():
     st.title("Calculadora de Pago Mensual de Apartamento")
 
     cost_of_apartment = st.number_input("Costo total del apartamento (en Q):")
+    down_payment = st.number_input("Pago inicial o enganche (en Q):")
     payment_years = st.number_input("Tiempo de pago (en años):")
     interest_rate = st.number_input("Tasa de interés anual (%):")
     maintenance_price = st.number_input("Precio mensual de mantenimiento (en Q):")
@@ -26,9 +27,8 @@ def main():
     other_expenses = st.number_input("Otros gastos mensuales (en Q):")
 
     if st.button("Calcular"):
-        monthly_payment = calculate_monthly_payment(cost_of_apartment, payment_years, interest_rate, maintenance_price, parking_cost, other_expenses)
+        monthly_payment = calculate_monthly_payment(cost_of_apartment, down_payment, payment_years, interest_rate, maintenance_price, parking_cost, other_expenses)
         st.success(f"Pago mensual: Q {round(monthly_payment, 2)}")
 
 if __name__ == "__main__":
     main()
-
